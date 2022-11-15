@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+PREREQ=""
+prereqs()
+{
+    echo "${PREREQ}"
+}
+case "${1}" in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+copy_exec /sbin/wpa_supplicant
+copy_exec /sbin/wpa_cli
+copy_file config /etc/initramfs-tools/wpa_supplicant.conf /etc/wpa_supplicant.conf

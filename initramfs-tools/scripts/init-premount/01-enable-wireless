@@ -1,0 +1,29 @@
+#!/bin/sh
+
+PREREQ=""
+prereqs()
+{
+    echo "${PREREQ}"
+}
+case "${1}" in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+. /scripts/functions
+
+INTERFACE=$(/sbin/ip link | awk '{if(substr($2,1,1) =="w") {gsub(":","",$2); print($2); exit;}}')
+
+if ! [ -z "$INTERFACE" ]; then
+    echo
+    echo Wifi interface  is $INTERFACE
+    log_begin_msg "Starting Wifi connection"
+    /sbin/wpa_supplicant  -i$INTERFACE -c/etc/wpa_supplicant.conf -P/run/initramfs-wpa_supplicant.pid -B -f /tmp/wpa_supplicant.log
+else
+    echo
+    echo "No Wifi device found"
+fi
+
+configure_networking

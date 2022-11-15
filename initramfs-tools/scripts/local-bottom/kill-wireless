@@ -1,0 +1,16 @@
+#!/bin/sh
+
+PREREQ=""
+prereqs()
+{
+    echo "${PREREQ}"
+}
+case "${1}" in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+echo "Killing wpa_supplicant so the system takes over later."
+kill `cat /run/initramfs-wpa_supplicant.pid`

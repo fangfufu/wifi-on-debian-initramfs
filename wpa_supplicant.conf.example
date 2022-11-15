@@ -1,0 +1,11 @@
+# sample /etc/initramfs-tools/wpa_supplicant.conf
+# note that this is independent of the system /etc/wpa_supplicant.conf (if any)
+# only add the network you need at boot time. **And keep the ctrl_interface** !!
+ctrl_interface=/tmp/wpa_supplicant
+
+network={
+    ssid="MyNetwork"
+    scan_ssid=1
+    psk="network passphrase"
+    key_mgmt=WPA-PSK
+}
